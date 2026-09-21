@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/c5c2d281-c5f6-4489-bd59-323ce7df9341
+
 # Trading Pokemon Setup for the Android Macro
 
 This macro automates basic Pokemon GO trades. It searches for a trade button, opens the trade UI, selects a Pokemon, advances through the trade screens, and handles common warning dialogs and trade failures automatically.
@@ -162,5 +166,5 @@ As for the other settings:
 
 10 trades
 
-https://github.com/user-attachments/assets/6790015f-a2d4-4dfc-a745-0ec0fe7f26c0
+https://github.com/user-attachments/assets/baf19623-7160-4aaa-bdc3-d5f953ad8cfa
 
