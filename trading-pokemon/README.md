@@ -35,7 +35,7 @@ This trade auto tapper can handle multiple scenarios such as dynamax Pokemon and
 | Component | Supported versions/devices |
 | --- | --- |
 | Pokemon GO | 0.420.0+ |
-| Android Macro | 1.0.0.36+ |
+| Android Macro | 1.0.0.37+ |
 | Android version | Android 15+ |
 | Phone type | Slab phones (non-foldable), including Samsung Galaxy S-series/A-series and Pixel phones |
 
@@ -84,26 +84,31 @@ Before starting the macro, prepare both devices/phones like this:
 
 ## Macro settings
 
-When the macro starts, it opens a small dialog with these settings:
+When the macro starts, it opens a small dialog with the main settings first. Optional advanced settings are grouped in a collapsed section labeled "Advanced" so they stay out of the way for typical runs.
 
 | Setting | What it does |
 | --- | --- |
 | **Number of trades** | Sets the maximum number of trades the macro should try. |
 | **Auto stop at 0 Pokemon Searched** | Stops the macro when it finds no valid Pokemon to trade. |
-| **Number of trade retries** | Sets how many retry attempts are made after a failed trade. |
 | **Auto Yes on warning trade** | Accepts warning prompts automatically, typically for Dynamax or Mega-evolved Pokemon. |
 | **Auto Unfavorite** | Removes the favorite mark from Pokemon when needed. |
 | **Do Special Trade** | Allows the macro to continue through special trade prompts. |
+| **Advanced (optional)** | Collapsed by default; includes extra settings such as trade retry count. |
 
 ### Recommended starting values
 
 | Setting | Recommendation |
 | --- | --- |
 | Number of trades | 1 to 100 |
-| Number of trade retries | 2 to 5 |
 | Auto Yes on warning trade | Enabled |
 | Auto Unfavorite | Enabled if you want the macro to unmark Pokemon before trading |
 | Do Special Trade | Disabled unless you specifically want special trades |
+
+### Advanced settings
+
+| Setting | What it does |
+| --- | --- |
+| Number of trade retries | Sets how many retry attempts are made after a failed trade. Leave blank to use the default of 3. |
 
 ## What the macro handles automatically
 
@@ -122,7 +127,7 @@ This script includes logic for common trade states, including:
 
 ### How long do 100 trades take?
 
-On my two phones, doing 100 trades usually takes under 40 minutes. Pokemon GO has trade cooldown and the macro will not be able to run faster than the cooldown.
+On my two phones, doing 100 trades usually takes under 35 minutes. Pokemon GO has trade cooldown and the macro will not be able to run faster than the cooldown.
 
 ### Can this run on tablets or foldable phones?
 

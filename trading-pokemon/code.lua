@@ -11,8 +11,8 @@ function Main()
     SetupTradeButton()
 
     -- Normally, the maximum number of trades is 100 + special trades in a day
-    -- The game developers have the ability to increase (temporary or permanent) this limit in the future, so we will set a hard limit of 220 trades in a day
-    local tradesRemaining = math.min(Setting_TradeLoopCount or 0, 220)
+    -- The game developers have the ability to increase (temporary or permanent) this limit in the future, so we will set a hard limit of 250 trades in a day
+    local tradesRemaining = Setting_TradeLoopCount
     local lastFailure = 0
     local failedTradeCount = 0
     while tradesRemaining > 0 do
@@ -25,7 +25,7 @@ function Main()
         -3 = cancel out of special trade
         1 = out of range/trade cooldown
         2 = timed out/cancelled
-        3 = temporarily unavailable
+        3 = temporarily unavailable/friend not found
         ]]
         local returnedValue = PerformTradeSequence()
 
@@ -57,27 +57,26 @@ end
 function SetupSettings()
     Dialog:init()
     --[[
-    Dialog:add(TextView("Language"))
     local multipleLanguage = RadioGroup(0)
     multipleLanguage:add(RadioButton(0, "English"))
+    Dialog:add(multipleLanguage:showAsDropdown("Language"))
     ]]
-    Dialog:add(EditText(1,"Number of trades"))
+    Dialog:add(NumberInput(1,"Number of trades"):setRange(1, 250))
     Dialog:add(CheckBox(2,"Auto stop at 0 Pokemon Searched"))
-    Dialog:add(EditText(3,"Number of trade retries"))
     Dialog:add(CheckBox(4,"Auto Yes on warning trade"))
     Dialog:add(CheckBox(5,"Auto Unfavorite"))
     Dialog:add(CheckBox(6,"Do Special Trade"))
+    local advanced = Section("Advanced", true)
+    advanced:add(NumberInput(3,"Number of trade retries"):setRequired(false):setRange(0, 10):setHelp("Only when trade errors out"))
+    Dialog:add(advanced)
     Dialog:show()
 
     Setting_TradeLoopCount = Dialog:getValueById(1)
     Setting_AutoStop = Dialog:getValueById(2)
-    Setting_TradeRetries = Dialog:getValueById(3)
+    Setting_TradeRetries = Dialog:getValueById(3) or 3
     Setting_ConfirmWarning = Dialog:getValueById(4)
     Setting_Unfavorite = Dialog:getValueById(5)
     Setting_DoSpecial = Dialog:getValueById(6)
-
-    Setting_TradeLoopCount = tonumber(Setting_TradeLoopCount)
-    Setting_TradeRetries = tonumber(Setting_TradeRetries)
 
     Settings:setAutoScale(false)
 end
@@ -108,7 +107,7 @@ function SetupStaticPoints()
         dialogCenterMiddle:getY(),
         dialogCenterMiddle:getY() + CalcFromRatio(0.301, RenderWidth),
     }
-    Points_DialogCallToAction = GenerateYPoints(Y_DialogCallToAction[1], Y_DialogCallToAction[2], X_DialogCallToAction, Height_DialogCallToAction)
+    Points_DialogCallToAction = GenerateYPoints(Y_DialogCallToAction[1], Y_DialogCallToAction[2], X_DialogCallToAction, Height_DialogCallToAction, 0, 3)
     Color_DialogCallToAction = Color("#72d69c")
     Height_CtaCancelDifference = CalcFromRatio(0.1667, RenderWidth)
 
@@ -178,7 +177,7 @@ function SetupStaticPoints()
         dialogCenterMiddle:getY() + CalcFromRatio(0.605, RenderWidth),
     }
     Height_WarningYesButton = Height_DialogCallToAction
-    Points_WarningYesButton = GenerateYPoints(Y_WarningYesButton[1], Y_WarningYesButton[2], X_WarningYesButton, Height_WarningYesButton)
+    Points_WarningYesButton = GenerateYPoints(Y_WarningYesButton[1], Y_WarningYesButton[2], X_WarningYesButton, Height_WarningYesButton, 0, 3)
     Color_WarningYesButton = Color_DialogCallToAction
 
     Point_QuitButton = CalculatePoint{ xRatio = 0.112, yRatio = 0.152 }
@@ -468,6 +467,11 @@ function CheckAndHandleDialog()
             returnValue = 3
             clickCallToActionButton = true
             break
+        end
+        -- trade_error_friend_not_found
+        if string.find(text, "Couldn't find", 0, true) then
+            returnValue = 3
+            clickCallToActionButton = true
         end
         -- special_trade_confirm_title
         -- special_trade_confirm_message
