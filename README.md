@@ -26,6 +26,7 @@ To report issues or express interest on supporting your phone, [submit a ticket]
 
 As for 2026, I have a backlog of some macros to be worked on. These includes (no order of preference):
 - Trading
+- GBL
 - Raid Battle
 - Max Battle
 - Evolve
